@@ -1,0 +1,6 @@
+[Unit]
+Description=Collect SMART + btrfs error counts for the desktop's Zabbix agent
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/clockmost-desktop-config/zabbix-desktop-check.sh collect

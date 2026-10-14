@@ -1,0 +1,5 @@
+# status files the user's jobs write and the Zabbix agent reads (/var/lib, since $HOME is 700): the desktop user is
+# in wheel; the health file is root's.
+d /var/lib/clockmost-health 0755 root root -
+d /var/lib/clockmost-backup 0775 root wheel -
+d /var/lib/clockmost-sync 0775 root wheel -

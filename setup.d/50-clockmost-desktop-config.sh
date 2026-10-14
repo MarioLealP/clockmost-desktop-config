@@ -1,0 +1,57 @@
+#!/bin/bash
+# clockmost-desktop-config's per-user settings (see clockmost-desktop-setup). Safe to repeat.
+set -eu
+cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
+k() { kwriteconfig6 --file "$1" --group "$2" --key "$3" "$4"; }
+
+# X11 apps at native pixels: Plasma's "legacy apps scale themselves" takes the largest output scale (a 200% tablet)
+# and Wine/Steam then saw the screens doubled (FFXIV filled half the screen)
+k kwinrc Xwayland Scale 1
+qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+echo "   X11 apps unscaled (Xwayland Scale=1)"
+
+# KDE Wallet off entirely: KeePassXC is the Secret Service (its Secret Service switch is below)
+k kwalletrc Wallet Enabled false
+k kwalletrc org.freedesktop.secrets apiEnabled false
+echo "   KDE Wallet off"
+
+# Chromium-based apps talk to KDE Wallet directly on KDE - send them to the Secret Service (KeePassXC) instead
+flag=--password-store=gnome-libsecret
+if [ ! -e "$cfg/spotify-launcher.conf" ]; then
+    printf '[spotify]\n# KeePassXC is the Secret Service - Chromium would otherwise go to KDE Wallet\nextra_arguments = ["%s"]\n' \
+        "$flag" >"$cfg/spotify-launcher.conf"
+    echo "   Spotify: $flag"
+elif ! grep -q -- "$flag" "$cfg/spotify-launcher.conf"; then
+    echo "   Spotify: $cfg/spotify-launcher.conf exists without $flag - add it to extra_arguments by hand"
+fi
+if ! grep -qs -- "$flag" "$cfg/equibop-flags.conf"; then
+    printf '# KeePassXC is the Secret Service - Chromium would otherwise go to KDE Wallet\n%s\n' "$flag" >>"$cfg/equibop-flags.conf"
+    echo "   Equibop: $flag"
+fi
+
+# KeePassXC = the Secret Service, no per-access prompt (apps only see the group exposed in the database settings).
+# KeePassXC rewrites its ini on exit, so only while it's closed.
+if pgrep -x keepassxc >/dev/null; then
+    echo "   KeePassXC running - Secret Service settings skipped (close it and re-run)"
+else
+    k "$cfg/keepassxc/keepassxc.ini" FdoSecrets Enabled true
+    k "$cfg/keepassxc/keepassxc.ini" FdoSecrets ConfirmAccessItem false
+    echo "   KeePassXC: Secret Service on, no per-access prompt"
+fi
+
+# Spectacle = the ShareX keys: Ctrl+Print region shot (annotate + clipboard), Ctrl+Shift+Print region recording,
+# Print opens it; the Plasma defaults (Meta+Shift+S/Print/R) go. Key codes: Ctrl+Print 83886089,
+# Ctrl+Shift+Print 117440521, Print 16777225.
+sp() {
+    busctl --user call org.kde.kglobalaccel /kglobalaccel org.kde.KGlobalAccel setForeignShortcutKeys 'asa(ai)' \
+        4 org.kde.spectacle.desktop "$1" Spectacle "$2" 1 1 "$3" 2>/dev/null
+}
+if sp RectangularRegionScreenShot "Capture Rectangular Region" 83886089 &&
+    sp RecordRegion "Record Rectangular Region" 117440521 && sp _launch Spectacle 16777225; then
+    echo "   Spectacle: Ctrl+Print / Ctrl+Shift+Print / Print"
+else
+    echo "   Spectacle keys: kglobalaccel not reachable - re-run inside the Plasma session"
+fi
+k spectaclerc General launchAction TakeRectangularScreenshot
+k spectaclerc General clipboardGroup PostScreenshotCopyImage
+k spectaclerc General ocrLanguages eng

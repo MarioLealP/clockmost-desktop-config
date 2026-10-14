@@ -1,0 +1,26 @@
+pkgbase = clockmost-desktop-config
+	pkgdesc = clockmost desktop glue: Zabbix desktop checks + health timer, the apps the desktop needs, and per-user settings (Xwayland scale, KDE Wallet off, KeePassXC Secret Service, Spectacle keys)
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://git.clockmost.com/pkgs/clockmost-desktop-config
+	install = clockmost-desktop-config.install
+	arch = any
+	license = MIT
+	depends = zabbix-agent2
+	depends = smartmontools
+	depends = pacman-contrib
+	depends = btrfs-progs
+	depends = util-linux
+	depends = keepassxc
+	depends = qt5-wayland
+	depends = rclone
+	depends = restic
+	depends = ffmpeg4.4
+	depends = fuse2
+	depends = tesseract-data-eng
+	depends = spectacle
+	depends = kconfig
+	options = !debug
+	backup = etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf
+
+pkgname = clockmost-desktop-config

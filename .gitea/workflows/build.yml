@@ -1,0 +1,17 @@
+# Per-package workflow: only pkgname + deps live here; the gates are in pkgs/packaging's generic-pkg.yml.
+name: build
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  pkg:
+    uses: pkgs/packaging/.gitea/workflows/generic-pkg.yml@main
+    with:
+      pkgname: clockmost-desktop-config
+      # makepkg runs without sudo in CI: depends must be preinstalled here
+      extra_pacman_deps: "zabbix-agent2 smartmontools pacman-contrib btrfs-progs util-linux keepassxc qt5-wayland rclone restic ffmpeg4.4 fuse2 tesseract-data-eng spectacle kconfig"
+    secrets:
+      PACKAGE_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
