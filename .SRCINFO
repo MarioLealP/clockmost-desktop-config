@@ -1,6 +1,6 @@
 pkgbase = clockmost-desktop-config
 	pkgdesc = clockmost desktop glue: Zabbix desktop checks + health timer, the apps the desktop needs, and per-user settings (Xwayland scale, KDE Wallet off, KeePassXC Secret Service, Spectacle keys)
-	pkgver = 0.1.0
+	pkgver = 0.1.1
 	pkgrel = 1
 	url = https://git.clockmost.com/pkgs/clockmost-desktop-config
 	install = clockmost-desktop-config.install
@@ -20,6 +20,8 @@ pkgbase = clockmost-desktop-config
 	depends = tesseract-data-eng
 	depends = spectacle
 	depends = kconfig
+	depends = kde-gtk-config
+	depends = breeze-gtk
 	options = !debug
 	backup = etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf
 
