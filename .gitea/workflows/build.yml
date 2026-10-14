@@ -12,6 +12,6 @@ jobs:
     with:
       pkgname: clockmost-desktop-config
       # makepkg runs without sudo in CI: depends must be preinstalled here
-      extra_pacman_deps: "zabbix-agent2 smartmontools pacman-contrib btrfs-progs util-linux keepassxc qt5-wayland rclone restic ffmpeg4.4 fuse2 tesseract-data-eng spectacle kconfig"
+      extra_pacman_deps: "zabbix-agent2 smartmontools pacman-contrib btrfs-progs util-linux keepassxc qt5-wayland rclone restic ffmpeg4.4 fuse2 tesseract-data-eng spectacle kconfig kde-gtk-config breeze-gtk"
     secrets:
       PACKAGE_TOKEN: ${{ secrets.PACKAGE_TOKEN }}

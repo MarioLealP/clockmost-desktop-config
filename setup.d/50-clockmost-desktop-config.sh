@@ -10,6 +10,17 @@ k kwinrc Xwayland Scale 1
 qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
 echo "   X11 apps unscaled (Xwayland Scale=1)"
 
+# dark mode: Breeze Dark + the dark Plasma style, only while the stock light scheme is on (a scheme picked by hand -
+# EndfieldDark one day - stays). No global theme: those can reset panel layouts.
+scheme=$(kreadconfig6 --group General --key ColorScheme)
+case "$scheme" in
+    "" | BreezeLight | BreezeClassic)
+        plasma-apply-colorscheme BreezeDark >/dev/null 2>&1 || true
+        plasma-apply-desktoptheme breeze-dark >/dev/null 2>&1 || true
+        echo "   dark mode: Breeze Dark (KDE apps; GTK + websites follow)" ;;
+    *) echo "   colour scheme kept: $scheme" ;;
+esac
+
 # KDE Wallet off entirely: KeePassXC is the Secret Service (its Secret Service switch is below)
 k kwalletrc Wallet Enabled false
 k kwalletrc org.freedesktop.secrets apiEnabled false
@@ -18,9 +29,9 @@ echo "   KDE Wallet off"
 # Chromium-based apps talk to KDE Wallet directly on KDE - send them to the Secret Service (KeePassXC) instead
 flag=--password-store=gnome-libsecret
 if [ ! -e "$cfg/spotify-launcher.conf" ]; then
-    printf '[spotify]\n# KeePassXC is the Secret Service - Chromium would otherwise go to KDE Wallet\nextra_arguments = ["%s"]\n' \
+    printf '[spotify]\n# KeePassXC is the Secret Service - Chromium would otherwise go to KDE Wallet. Native Wayland.\nextra_arguments = ["%s", "--enable-features=UseOzonePlatform,WaylandWindowDecorations", "--ozone-platform=wayland"]\n' \
         "$flag" >"$cfg/spotify-launcher.conf"
-    echo "   Spotify: $flag"
+    echo "   Spotify: $flag, native Wayland"
 elif ! grep -q -- "$flag" "$cfg/spotify-launcher.conf"; then
     echo "   Spotify: $cfg/spotify-launcher.conf exists without $flag - add it to extra_arguments by hand"
 fi
