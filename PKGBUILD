@@ -20,6 +20,7 @@ depends=(
   'plasma-systemmonitor'             # the task manager (Ctrl+Shift+Esc)
   'kde-gtk-config' 'breeze-gtk'      # dark mode reaches GTK apps (KDE syncs the scheme into gtk-3.0/4.0)
 )
+optdepends=('felt-tray: Felt on the desktop (its clockmost config + autostart come from here)')
 backup=('etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf')
 install="${pkgname}.install"
 options=('!debug')
@@ -31,6 +32,8 @@ package() {
   install -Dm644 -t "$pkgdir/usr/lib/systemd/system" systemd/clockmost-desktop-health.service systemd/clockmost-desktop-health.timer
   install -Dm644 systemd/clockmost-journald.conf "$pkgdir/usr/lib/systemd/journald.conf.d/90-clockmost.conf"
   install -Dm644 systemd/clockmost-desktop-config.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/clockmost-desktop-config.conf"
+  install -Dm644 felt/felt-tray.toml "$pkgdir/usr/share/clockmost-desktop-config/felt-tray.toml"
+  install -Dm644 setup.d/40-felt-tray.sh "$pkgdir/usr/share/clockmost-desktop/setup.d/40-felt-tray.sh"
   install -Dm644 setup.d/50-clockmost-desktop-config.sh "$pkgdir/usr/share/clockmost-desktop/setup.d/50-clockmost-desktop-config.sh"
   install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
