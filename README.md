@@ -17,7 +17,10 @@ install (2026-10-14, workspace `runbooks/desktop-linux-install-log.md`), package
 
 **Per user** (`clockmost-desktop-setup` -> `setup.d/50-clockmost-desktop-config.sh`, safe to repeat): Breeze Dark
 (only over the stock light scheme; GTK via kde-gtk-config + breeze-gtk); Xwayland `Scale=1`; KDE Wallet off; `--password-store=gnome-libsecret` for Spotify + Equibop (Spotify also native Wayland); KeePassXC Secret Service on
-without per-access prompts (only while KeePassXC is closed); Spectacle = ShareX keys (Ctrl+Print region shot to
+without per-access prompts, starting minimized into the bar's app tray (only while KeePassXC is closed); one
+KeePassXC at login - its own autostart entry goes when the tang unlock entry exists, and Plasma's session restore
+skips KeePassXC + Spotify (`ksmserverrc` `excludeApps`; a restored plain KeePassXC beat the tang unlock and left the
+vault locked, Spotify hung on it); Spectacle = ShareX keys (Ctrl+Print region shot to
 annotate + clipboard, Ctrl+Shift+Print region recording, Print) + English OCR.
 
 **Not here (per machine):** the agent's `Server`/`ServerActive`/`Hostname`, Wazuh enrolment, keys, the workspace

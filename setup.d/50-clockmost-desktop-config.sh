@@ -40,15 +40,33 @@ if ! grep -qs -- "$flag" "$cfg/equibop-flags.conf"; then
     echo "   Equibop: $flag"
 fi
 
-# KeePassXC = the Secret Service, no per-access prompt (apps only see the group exposed in the database settings).
-# KeePassXC rewrites its ini on exit, so only while it's closed.
+# KeePassXC = the Secret Service, no per-access prompt (apps only see the group exposed in the database settings),
+# starts minimized into the bar's app tray. KeePassXC rewrites its ini on exit, so only while it's closed.
 if pgrep -x keepassxc >/dev/null; then
-    echo "   KeePassXC running - Secret Service settings skipped (close it and re-run)"
+    echo "   KeePassXC running - its settings skipped (close it and re-run)"
 else
     k "$cfg/keepassxc/keepassxc.ini" FdoSecrets Enabled true
     k "$cfg/keepassxc/keepassxc.ini" FdoSecrets ConfirmAccessItem false
-    echo "   KeePassXC: Secret Service on, no per-access prompt"
+    k "$cfg/keepassxc/keepassxc.ini" GUI ShowTrayIcon true
+    k "$cfg/keepassxc/keepassxc.ini" GUI MinimizeToTray true
+    k "$cfg/keepassxc/keepassxc.ini" GUI MinimizeOnStartup true
+    echo "   KeePassXC: Secret Service on, no per-access prompt, starts in the tray"
 fi
+
+# exactly one KeePassXC at login: the tang unlock entry (workspace scripts/keepass-tang-unlock.sh) starts it unlocked.
+# A second, plain one (its own "launch at system startup" entry, or Plasma's session restore) wins the race and
+# leaves the vault locked - and Spotify, started in the same second, hangs on the locked Secret Service.
+if [ -e "$cfg/autostart/keepass-tang-unlock.desktop" ] && [ -e "$cfg/autostart/org.keepassxc.KeePassXC.desktop" ]; then
+    rm -f "$cfg/autostart/org.keepassxc.KeePassXC.desktop"
+    echo "   KeePassXC's own autostart removed (the tang unlock entry starts it)"
+fi
+# Plasma's Wayland session restore applies excludeApps (desktop ids) when it saves the session at logout
+excl=$(kreadconfig6 --file ksmserverrc --group General --key excludeApps)
+for app in org.keepassxc.KeePassXC.desktop spotify-launcher.desktop; do
+    case ",$excl," in *",$app,"*) ;; *) excl="${excl:+$excl,}$app" ;; esac
+done
+k ksmserverrc General excludeApps "$excl"
+echo "   session restore skips KeePassXC + Spotify"
 
 # Spectacle = the ShareX keys: Ctrl+Print region shot (annotate + clipboard), Ctrl+Shift+Print region recording,
 # Print opens it; the Plasma defaults (Meta+Shift+S/Print/R) go. Key codes: Ctrl+Print 83886089,
