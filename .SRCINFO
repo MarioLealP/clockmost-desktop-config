@@ -1,7 +1,7 @@
 pkgbase = clockmost-desktop-config
 	pkgdesc = clockmost desktop glue: Zabbix desktop checks + health timer, the apps the desktop needs, and per-user settings (Xwayland scale, KDE Wallet off, KeePassXC Secret Service + one instance at login, Spectacle keys)
-	pkgver = 0.1.4
-	pkgrel = 2
+	pkgver = 0.1.5
+	pkgrel = 1
 	url = https://git.clockmost.com/pkgs/clockmost-desktop-config
 	install = clockmost-desktop-config.install
 	arch = any
@@ -23,6 +23,7 @@ pkgbase = clockmost-desktop-config
 	depends = plasma-systemmonitor
 	depends = kde-gtk-config
 	depends = breeze-gtk
+	optdepends = felt-tray: Felt on the desktop (its clockmost config + autostart come from here)
 	options = !debug
 	backup = etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf
 
