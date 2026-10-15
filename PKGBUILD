@@ -3,7 +3,7 @@
 # Builds from $startdir (the pkgs/ CI checks out the tagged commit and runs makepkg in place). Scripts + config only.
 
 pkgname=clockmost-desktop-config
-pkgver=0.1.2
+pkgver=0.1.3
 pkgrel=1
 pkgdesc="clockmost desktop glue: Zabbix desktop checks + health timer, the apps the desktop needs, and per-user settings (Xwayland scale, KDE Wallet off, KeePassXC Secret Service + one instance at login, Spectacle keys)"
 arch=('any')
