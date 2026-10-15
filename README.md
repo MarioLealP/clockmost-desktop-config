@@ -22,7 +22,7 @@ install (2026-10-14, workspace `runbooks/desktop-linux-install-log.md`), package
 without per-access prompts, starting minimized into the bar's app tray (only while KeePassXC is closed); one
 KeePassXC at login - its own autostart entry goes when the tang unlock entry exists, and Plasma's session restore
 skips KeePassXC + Spotify (`ksmserverrc` `excludeApps`; a restored plain KeePassXC beat the tang unlock and left the
-vault locked, Spotify hung on it); Spectacle = ShareX keys (Ctrl+Print region shot to
+vault locked, Spotify hung on it); System Monitor on Ctrl+Shift+Esc (the process list, like Windows' Task Manager); Spectacle = ShareX keys (Ctrl+Print region shot to
 annotate + clipboard, Ctrl+Shift+Print region recording, Print) + English OCR.
 
 **Not here (per machine):** the agent's `Server`/`ServerActive`/`Hostname`, Wazuh enrolment, keys, the workspace

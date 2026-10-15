@@ -17,6 +17,7 @@ depends=(
   'fuse2'                            # AppImages (Teamcraft)
   'tesseract-data-eng'               # Spectacle's OCR in English
   'spectacle' 'kconfig'              # kwriteconfig6 for the setup step
+  'plasma-systemmonitor'             # the task manager (Ctrl+Shift+Esc)
   'kde-gtk-config' 'breeze-gtk'      # dark mode reaches GTK apps (KDE syncs the scheme into gtk-3.0/4.0)
 )
 backup=('etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf')

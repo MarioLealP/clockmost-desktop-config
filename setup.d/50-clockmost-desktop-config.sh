@@ -84,3 +84,13 @@ fi
 k spectaclerc General launchAction TakeRectangularScreenshot
 k spectaclerc General clipboardGroup PostScreenshotCopyImage
 k spectaclerc General ocrLanguages eng
+
+# task manager like Windows: Ctrl+Shift+Esc = System Monitor's process list (End / Kill process); Meta+Esc (its own
+# default) = the overview. kglobalaccel only knows apps from its last sycoca scan, so rebuild that first.
+kbuildsycoca6 >/dev/null 2>&1 || true
+if busctl --user call org.kde.kglobalaccel /kglobalaccel org.kde.KGlobalAccel setForeignShortcutKeys 'asa(ai)' \
+    4 org.kde.plasma-systemmonitor.desktop processes "System Monitor" "Open Processes Page" 1 1 117440512 2>/dev/null; then
+    echo "   System Monitor: Ctrl+Shift+Esc (processes)"
+else
+    echo "   System Monitor key: kglobalaccel not reachable - re-run inside the Plasma session"
+fi
