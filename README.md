@@ -13,6 +13,8 @@ install (2026-10-14, workspace `runbooks/desktop-linux-install-log.md`), package
   SMART/btrfs need root -> `clockmost-desktop-health.timer` (every 30 min) collects them into
   `/var/lib/clockmost-health/desktop.status`; the agent only reads (Arch creates the `zabbix` user expired, so sudo
   for it fails). -1 = unreadable/stale, never a silent 0. Zabbix side: clockmost-infra `ops/zabbix/zbx23`.
+- journald keeps up to 1G (`/usr/lib/systemd/journald.conf.d/90-clockmost.conf`; CachyOS ships 50M, too little to
+  read a crash afterwards).
 - `tmpfiles.d`: `/var/lib/clockmost-{health,backup,sync}` (backup + sync: group wheel, written by the user's jobs).
 
 **Per user** (`clockmost-desktop-setup` -> `setup.d/50-clockmost-desktop-config.sh`, safe to repeat): Breeze Dark

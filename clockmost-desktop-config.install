@@ -1,6 +1,7 @@
 post_install() {
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/clockmost-desktop-config.conf >/dev/null 2>&1 || true
   systemctl daemon-reload >/dev/null 2>&1 || true
+  systemctl restart systemd-journald.service >/dev/null 2>&1 || true
   systemctl enable --now clockmost-desktop-health.timer >/dev/null 2>&1 || true
   systemctl try-restart zabbix-agent2.service >/dev/null 2>&1 || true
   echo ":: run 'clockmost-desktop-setup' as your user in the Plasma session; the Zabbix agent's Server/Hostname"

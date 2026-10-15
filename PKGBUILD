@@ -28,6 +28,7 @@ package() {
   install -Dm755 zabbix/zabbix-desktop-check.sh "$pkgdir/usr/lib/clockmost-desktop-config/zabbix-desktop-check.sh"
   install -Dm644 zabbix/clockmost-desktop.conf "$pkgdir/etc/zabbix/zabbix_agent2.d/clockmost-desktop.conf"
   install -Dm644 -t "$pkgdir/usr/lib/systemd/system" systemd/clockmost-desktop-health.service systemd/clockmost-desktop-health.timer
+  install -Dm644 systemd/clockmost-journald.conf "$pkgdir/usr/lib/systemd/journald.conf.d/90-clockmost.conf"
   install -Dm644 systemd/clockmost-desktop-config.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/clockmost-desktop-config.conf"
   install -Dm644 setup.d/50-clockmost-desktop-config.sh "$pkgdir/usr/share/clockmost-desktop/setup.d/50-clockmost-desktop-config.sh"
   install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
