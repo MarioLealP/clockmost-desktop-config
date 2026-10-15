@@ -9,6 +9,12 @@ if [[ ! -e $cfg ]]; then
     echo "   felt-tray: clockmost config written ($cfg)"
 fi
 
+bl="$(dirname "$cfg")/capture_blocklist.toml"
+if [[ ! -e $bl ]]; then
+    install -Dm644 /usr/share/clockmost-desktop-config/capture_blocklist.toml "$bl"
+    echo "   felt-tray: screen-capture blocklist written ($bl)"
+fi
+
 systemctl --user daemon-reload
 systemctl --user enable felt-tray.service >/dev/null 2>&1 && echo "   felt-tray starts with the session"
 

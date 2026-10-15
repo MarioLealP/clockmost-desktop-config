@@ -19,7 +19,8 @@ install (2026-10-14, workspace `runbooks/desktop-linux-install-log.md`), package
 
 **Felt** (`setup.d/40-felt-tray.sh`, only when `felt-tray` is installed): writes `~/.config/felt-tray/config.toml`
 from `/usr/share/clockmost-desktop-config/felt-tray.toml` when missing (clockmost hosts, the vault renewer's cert,
-`tray_icon = false` for the bar's Felt chip), enables `felt-tray.service`, warns when the session lacks `tray-certs`.
+`tray_icon = false` for the bar's Felt chip, `screen_reactions = true`) and Mario's screen-capture blocklist
+(`capture_blocklist.toml`, Linux app ids; both only when missing), enables `felt-tray.service`, warns when the session lacks `tray-certs`.
 
 **Per user** (`clockmost-desktop-setup` -> `setup.d/50-clockmost-desktop-config.sh`, safe to repeat): Breeze Dark
 (only over the stock light scheme; GTK via kde-gtk-config + breeze-gtk); Xwayland `Scale=1`; KDE Wallet off; `--password-store=gnome-libsecret` for Spotify + Equibop (Spotify also native Wayland); KeePassXC Secret Service on

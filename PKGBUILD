@@ -33,6 +33,7 @@ package() {
   install -Dm644 systemd/clockmost-journald.conf "$pkgdir/usr/lib/systemd/journald.conf.d/90-clockmost.conf"
   install -Dm644 systemd/clockmost-desktop-config.tmpfiles "$pkgdir/usr/lib/tmpfiles.d/clockmost-desktop-config.conf"
   install -Dm644 felt/felt-tray.toml "$pkgdir/usr/share/clockmost-desktop-config/felt-tray.toml"
+  install -Dm644 felt/capture_blocklist.toml "$pkgdir/usr/share/clockmost-desktop-config/capture_blocklist.toml"
   install -Dm644 setup.d/40-felt-tray.sh "$pkgdir/usr/share/clockmost-desktop/setup.d/40-felt-tray.sh"
   install -Dm644 setup.d/50-clockmost-desktop-config.sh "$pkgdir/usr/share/clockmost-desktop/setup.d/50-clockmost-desktop-config.sh"
   install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"

@@ -6,3 +6,6 @@ client_bundle = "/var/lib/clockmost/service-identities/tray/client/bundle.pem"
 window_hosts = ["felt.clockmost.com", "auth.clockmost.com"]
 # clockmost-shell's bar has the Felt chip (it calls org.clockmost.Felt); another shell: set true
 tray_icon = false
+
+# her screen reactions (KWin); the blocklist (Mario's policy) is capture_blocklist.toml next to this file
+screen_reactions = true
