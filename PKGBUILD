@@ -4,7 +4,7 @@
 
 pkgname=clockmost-desktop-config
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc="clockmost desktop glue: Zabbix desktop checks + health timer, the apps the desktop needs, and per-user settings (Xwayland scale, KDE Wallet off, KeePassXC Secret Service + one instance at login, Spectacle keys)"
 arch=('any')
 url="https://git.clockmost.com/pkgs/${pkgname}"
