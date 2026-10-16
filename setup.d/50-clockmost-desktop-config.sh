@@ -60,13 +60,10 @@ if [ -e "$cfg/autostart/keepass-tang-unlock.desktop" ] && [ -e "$cfg/autostart/o
     rm -f "$cfg/autostart/org.keepassxc.KeePassXC.desktop"
     echo "   KeePassXC's own autostart removed (the tang unlock entry starts it)"
 fi
-# Plasma's Wayland session restore applies excludeApps (desktop ids) when it saves the session at logout
-excl=$(kreadconfig6 --file ksmserverrc --group General --key excludeApps)
-for app in org.keepassxc.KeePassXC.desktop spotify-launcher.desktop; do
-    case ",$excl," in *",$app,"*) ;; *) excl="${excl:+$excl,}$app" ;; esac
-done
-k ksmserverrc General excludeApps "$excl"
-echo "   session restore skips KeePassXC + Spotify"
+# No session restore (Mario 2026-10-16: "disable this session restore garbage"): every login starts empty -
+# autostart entries start what should run (it had relaunched KeePassXC, Spotify, and Felt's overlay Godot).
+k ksmserverrc General loginMode emptySession
+echo "   session restore off (logins start empty)"
 
 # Spectacle = the ShareX keys: Ctrl+Print region shot (annotate + clipboard), Ctrl+Shift+Print region recording,
 # Print opens it; the Plasma defaults (Meta+Shift+S/Print/R) go. Key codes: Ctrl+Print 83886089,
