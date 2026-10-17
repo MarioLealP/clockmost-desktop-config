@@ -17,6 +17,9 @@ apps = [
     "keepassxc", "org.keepassxc.KeePassXC", "org.kde.kwalletmanager", "kwalletmanager5",
     # privacy browsers
     "mullvadbrowser", "mullvad-browser", "torbrowser", "tor-browser",
+    # system dialogs: the portal's file picker / screen-share / shortcut dialogs, password prompts
+    "org.freedesktop.impl.portal.desktop.kde", "xdg-desktop-portal-kde", "xdg-desktop-portal-gtk",
+    "org.kde.polkit-kde-authentication-agent-1", "polkit-kde-authentication-agent-1",
 ]
 
 title_regexes = [
