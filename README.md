@@ -1,7 +1,7 @@
 # clockmost-desktop-config
 
 The glue a clockmost Linux desktop needs besides the shell and the skins - what was done by hand on the first metal
-install (2026-10-14, workspace `runbooks/desktop-linux-install-log.md`), packaged so a reinstall gets it.
+install (2026-10-14, from my install log), packaged so a reinstall gets it.
 
 **System (the package):**
 - `depends`: the apps the desktop relies on that nothing else pulls in - qt5-wayland (KeePassXC is Qt 5), ffmpeg4.4
